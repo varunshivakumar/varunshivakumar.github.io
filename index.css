@@ -1,0 +1,174 @@
+body {
+    padding:0 0 25px 0; margin:0; width:100vw; min-height:100vh; overflow-y:scroll;overflow-x:hidden;
+    font-family:"Open Sans";min-width:400px;font-size:16px;
+}
+
+.nopadding, .pad0 {  padding: 0;  }
+
+*{
+
+
+}
+a{
+    outline:none;
+}
+.lato{font-family:Lato;}
+.opens{font-family:Open Sans;}
+/* Convenient Classes */
+.posRel { position:relative; }
+.posAbs { position:absolute; }
+.posFix { position:fixed; }
+.inlineBlock { display:inline-block; }
+.block { display:block; }
+.floatRight {float:right;}
+.floatLeft {float:left;}
+.width100 { width:100%;}
+.height100 { height:100%;}
+.bordRad10 { border-radius:10px;}
+.bordRad5{  border-radius:5px;}
+.zn1 {z-index:-1;}
+.z0 {z-index:0;}
+.z1 {z-index:1;}
+.leftText{text-align:left;}
+.rightText{text-align:right;}
+.centerText{text-align:center;}
+.vertCenterMid{display:flex;justify-content:center;align-items:center;}
+.vertCenterLeft{display:flex;align-items:center;}
+.vertCenterRight{display:flex;align-items:center;justify-content:flex-end;}
+.displayNone{display:none;}
+.pointer{cursor:pointer;}
+.textDecNone, .textDecNone:active, .textDecNone:focus, .textDecNone:visited, .textDecNone:hover { text-decoration:none !important;}
+
+
+.shadow1{
+    -webkit-box-shadow: 0px 5px 5px 0px #444444;
+    -moz-box-shadow:    0px 5px 5px 0px #444444;
+    box-shadow:         0px 5px 5px 0px #444444;
+}
+.shadow2{
+    -webkit-box-shadow: 0px 3px 5px 0px #666666;
+    -moz-box-shadow: 	0px 3px 5px 0px #666666;
+    box-shadow: 		0px 3px 5px 0px #666666;
+}
+.shadow3{
+    -webkit-box-shadow: 0px 5px 15px 0px #444444;
+    -moz-box-shadow:    0px 5px 15px 0px #444444;
+    box-shadow:         0px 5px 15px 0px #444444;
+}
+.shadow4{
+    -webkit-box-shadow: 0px 5px 15px 0px #aaa;
+    -moz-box-shadow:    0px 5px 15px 0px #aaa;
+    box-shadow:         0px 5px 15px 0px #aaa;
+}
+.shadow5{
+    -webkit-box-shadow: 0px 3px 5px 0px #aaa;
+    -moz-box-shadow: 	0px 3px 5px 0px #aaa;
+    box-shadow: 		0px 3px 5px 0px #aaa;
+}
+.program:hover{
+    background-color:#e4e4e4;
+}
+.program{
+    padding: 20px 20px !important;
+    cursor:pointer;
+}
+.program.selected{
+    background-color:#d52027;
+    color:white;
+}
+.seasonBtn{
+    border:2px solid #d52027;
+}
+.seasonBtn:hover{
+    background-color:lightgrey;
+}
+.selectedSeason, .selectedSeason:hover{
+    background-color:#d52027 !important;
+    color:white;
+}
+.hideItem{visibility:hidden;height:0;width:0;}
+
+.colWhite{  color:white;  }
+.colRed{color:#d52027;}
+.colDRed{color:#6b000d;}
+.colDGray{color:#5f5f5f;}
+.colGray{color:#828282;}
+.colLGray{color:#bebebe;}
+
+.backColLGray{background-color:#bebebe;}
+.backColPWhite{background-color:white;}
+
+
+/* */
+/*Styling Selectbox*/
+.drop-menu {
+    width: 300px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 2px rgb(204, 204, 204);
+    transition: all .5s ease;
+    position: relative;
+    font-size: 14px;
+    color: #474747;
+    height: 100%;
+    text-align: left
+}
+.drop-menu .select {
+    cursor: pointer;
+    display: block;
+    padding: 10px
+}
+.drop-menu .select i {
+    font-size: 13px;
+    color: #888;
+    cursor: pointer;
+    transition: all .5s ease;
+    float: right
+}
+.drop-menu:hover {
+    box-shadow: 0 0 4px rgb(204, 204, 204)
+}
+.drop-menu:active {
+    background-color: #f8f8f8
+}
+.drop-menu.active:hover,
+.drop-menu.active {
+    box-shadow: 0 0 4px rgb(204, 204, 204);
+    border-radius: 5px 5px 0 0;
+    background-color: #f8f8f8
+}
+.drop-menu.active .select i {
+    transform: rotate(180deg)
+}
+.drop-menu .dropeddown {
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    left: 0;
+    margin-top: 1px;
+    box-shadow: 0 1px 2px rgb(204, 204, 204);
+    border-radius: 0 1px 5px 5px;
+    overflow: hidden;
+    display: none;
+    max-height: 144px;
+    overflow-y: auto;
+    z-index: 9
+}
+.drop-menu .dropeddown li {
+    padding: 10px;
+    transition: all .2s ease;
+    cursor: pointer
+}
+.drop-menu .dropeddown {
+    padding: 0;
+    list-style: none
+}
+.drop-menu .dropeddown li:hover {
+    background-color: #d52027;
+    color: #fff
+}
+.drop-menu .dropeddown li:active {
+    background-color: #6b000d;
+    color: #fff
+}

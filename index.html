@@ -1,1 +1,362 @@
-Hello Bro
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Study Abroad Calculator</title>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,600,700" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <script type="text/javascript" src="index.js"></script>
+
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.red-deep_orange.min.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <script>
+        function showPrograms(){
+            if($('.selectedSeason')[0] == undefined || $('.select')[0].innerText == "Select Country"){
+                $('#programContainer').slideUp();
+                $('#programReqs').slideDown();
+                console.log('wtf');
+            } else {
+
+                // Filter out programs
+                var count = 0;
+                $('.program').each(function(){
+                    //console.log(this.innerText + " " + $('.select')[0].innerText);
+                    if( this.innerText.search($('.select')[0].innerText) < 0 ){
+                        $(this).hide();
+                    } else if ( this.innerText.search($('.selectedSeason')[0].innerText) < 0 ){
+                        $(this).hide();
+                    } else {
+                        $(this).show();
+                        count++;
+                    }
+                });
+
+                if(count > 0){
+                    $('#programContainer').slideDown();
+                    $('#programReqs').slideUp();
+                }
+            }
+        }
+
+        function calculateCost(){
+            var selectedProgramPrice = $('.selected').find('.price').text();
+            console.log(selectedProgramPrice);
+
+            var tapVal = $("#tap").val();
+            console.log(tapVal);
+
+            var fpgVal = $("#fpg").val();
+            console.log(fpgVal);
+
+            var gilVal = $("#gilmanShip").hasClass('is-checked');
+            console.log(gilVal);
+
+            var iapVal = $("#iapShip").hasClass('is-checked');
+            console.log(iapVal);
+
+            var cost = selectedProgramPrice - tapVal - fpgVal;
+            if (gilVal){
+                cost = cost - 5000;
+            }
+            if (iapVal){
+                cost = cost - 3000;
+            }
+            if (cost < 0){
+                $("#totalCost").text("Free!")
+            } else{
+                $("#totalCost").text("$" + cost + ".00");
+
+            }
+
+        }
+
+
+        $(document).ready(function(){
+            var count = 0;
+            $('#clickThisBtn').on("click", function(){
+                if(count % 2 == 1){
+                    showPrograms();
+                }
+                count++;
+            });
+
+            $(document).on('#countryChange','DOMSubtreeModified',function(){
+                console.log('HelloHello');
+                //showPrograms();
+            });
+
+
+            $('.program').click(function(){
+                $(".selected").removeClass('selected');
+                $(this).addClass('selected');
+                calculateCost();
+            });
+
+            $('.seasonBtn').click(function(){
+                $(".selectedSeason").removeClass('selectedSeason');
+                $(this).addClass('selectedSeason');
+                showPrograms();
+            });
+
+            /*Select Box js*/
+            $('.drop-menu').click(function () {
+                $(this).attr('tabindex', 1).focus();
+                $(this).toggleClass('active');
+                $(this).find('.dropeddown').slideToggle(300);
+            });
+            $('.drop-menu').focusout(function () {
+                $(this).removeClass('active');
+                $(this).find('.dropeddown').slideUp(300);
+            });
+            $('.drop-menu .dropeddown li').click(function () {
+                $(this).parents('.drop-menu').find('span').text($(this).text());
+                $(this).parents('.drop-menu').find('input').attr('value', $(this).attr('id'));
+            });
+            /*End Select Box js*/
+
+
+            $('.dropeddown li').click(function () {
+                var input = '<strong>' + $(this).parents('.drop-menu').find('input').val() + '</strong>',
+                        msg = '<span class="msg">Hidden input value is ';
+                $('.msg').html(msg + input + '</span>');
+            });
+
+        })
+
+    </script>
+</head>
+<body class="backColGray" style="min-width:800px;">
+
+<div class="posRel" style="">
+    <div class="posRel" style="height:220px;overflow:hidden;">
+        <img src="images/redBackground.jpg" width="100%"/>
+        <div class="posAbs backColPWhite bordRad10 vertCenterMid shadow3" style="top:25px;left:25px;padding:15px;height:80px;width:80px;">
+            <img src="sbulogo.png" class="" height="70px" style=""/>
+        </div>
+    </div>
+    <div class="posAbs centerText width100 colWhite lato" style="bottom:130px;font-size:4em;text-shadow: 2px 2px 12px #444444;font-weight:600;">Study Abroad Calculator</div>
+    <div class="posAbs vertCenterMid width100" style="height:100px;">
+        <div class="backColPWhite height100 width100 bordRad5 posRel vertCenterRight shadow2" style="padding:15px 55px 15px 55px;border:5px solid #bebebe;width:520px;bottom:70px;">
+            <div id="totalCost" class="opens posRel" style="font-size:5em;bottom:2px;">$0</div>
+        </div>
+    </div>
+</div>
+
+<div class="centerText" style="padding-top:90px;">
+    <div class="inlineBlock vertAlignTop" style="width:800px;">
+        <div class="vertCenterLeft posRel" style="padding:5px;">
+            <div class="lato" style="font-size:2em;padding-bottom:4px;font-weight:700;margin-bottom:8px;">Choose a Study Abroad Program</div>
+        </div>
+        <div class="vertCenterLeft posRel" style="padding:10px 5px 10px 5px;margin-bottom:15px;">
+            <div class="lato leftText vertCenterLeft" style="height:35px;width:300px;margin-right:15px;margin-bottom:5px;font-weight:600;font-size:20px;padding-bottom:5px;">
+                <span class="colRed" style="margin-right:8px;">Step 1: </span>
+                <span class="colGray">Choose a Semester</span>
+            </div>
+            <div class="bordRad5 vertCenterMid pointer seasonBtn" style="height:40px;width:100px;margin-right:15px;margin-bottom:5px;">Fall '17</div>
+            <div class="bordRad5 vertCenterMid pointer seasonBtn" style="height:40px;width:100px;margin-right:15px;margin-bottom:5px;">Winter '17</div>
+            <div class="bordRad5 vertCenterMid pointer seasonBtn" style="height:40px;width:100px;margin-right:15px;margin-bottom:5px;">Spring '18</div>
+            <div class="bordRad5 vertCenterMid pointer seasonBtn" style="height:40px;width:100px;margin-right:15px;margin-bottom:5px;">Summer '18</div>
+            <div class="bordRad5 vertCenterMid pointer seasonBtn" style="height:40px;width:100px;margin-bottom:5px;">Fall '18</div>
+        </div>
+
+        <div class="vertCenterLeft posRel" style="padding:10px 5px 10px 5px;margin-bottom:15px;">
+            <div class="lato leftText vertCenterLeft" style="height:35px;width:260px;margin-right:15px;margin-bottom:5px;font-weight:600;font-size:20px;padding-bottom:5px;">
+                <span class="colRed" style="margin-right:8px;">Step 2: </span>
+                <span class="colGray">Choose a Country</span>
+            </div>
+            <div id="clickThisBtn" class="">
+                <div class="drop-menu" style="outline:none !important;">
+                    <div class="select" style="outline:none !important;" onclick="console.log('select');">
+                        <span id="countryChange" onclick="console.log('easdf');">Select Country</span>
+                        <i class="fa fa-chevron-down posRel" style="top:2px;"></i>
+                    </div>
+                    <input type="hidden" name="gender">
+                    <ul class="dropeddown">
+                        <li>Australia</li>
+                        <li>China</li>
+                        <li>Great Britain</li>
+                        <li>France</li>
+                        <li>Italy</li>
+                        <li>Japan</li>
+                        <li>Korea</li>
+                        <li>Spain</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="vertCenterLeft posRel" style="padding:10px 5px 10px 5px;margin-bottom:15px;">
+            <div class="lato leftText vertCenterLeft" style="height:35px;width:250px;margin-right:15px;margin-bottom:5px;font-weight:600;font-size:20px;padding-bottom:5px;">
+                <span class="colRed" style="margin-right:8px;">Step 3: </span>
+                <span class="colGray">Choose a University</span>
+            </div>
+            <div id="programReqs" class="posRel colRed" style="width:300px;bottom:3px;">
+                Pick a semester and country first
+            </div>
+        </div>
+
+        <div id="programContainer" class="leftText bordRad5 displayNone" style="font-size:16px;overflow-y:scroll;border:2px solid #d52027;">
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">Tokyo University of Foreign Studies</span>
+                <span class="hideItem location" style="margin-right:10px;">Japan</span>
+                <span class="hideItem season">Fall '17</span>
+                <span class="hideItem price" style="">10965</span>
+                <span class="floatRight">$10,965.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">Australian National University</span>
+                <span class="hideItem location" style="margin-right:10px;">Australia</span>
+                <span class="hideItem season">Winter '17</span>
+                <span class="hideItem price" style="">15295</span>
+                <span class="floatRight">$15,295.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">Nanjing University</span>
+                <span class="hideItem location" style="margin-right:10px;">China</span>
+                <span class="hideItem season">Summer '17</span>
+                <span class="hideItem price" style="">10370</span>
+                <span class="floatRight">$10,370.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">University of Sussex</span>
+                <span class="hideItem location" style="margin-right:10px;">Great Britain</span>
+                <span class="hideItem season">Fall '17</span>
+                <span class="hideItem price" style="">10365</span>
+                <span class="floatRight">$10,365.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">University of College London</span>
+                <span class="hideItem location" style="margin-right:10px;">Great Britain</span>
+                <span class="hideItem season">Fall '17</span>
+                <span class="hideItem price" style="">11865</span>
+                <span class="floatRight">$11,865.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">Okayama University</span>
+                <span class="hideItem location" style="margin-right:10px;">Japan</span>
+                <span class="hideItem season">Fall '17</span>
+                <span class="hideItem price" style="">10965</span>
+                <span class="floatRight">$10,965.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">Deakin University</span>
+                <span class="hideItem location" style="margin-right:10px;">Australia</span>
+                <span class="hideItem season">Fall '17</span>
+                <span class="hideItem price" style="">12105</span>
+                <span class="floatRight">$12,105.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">Ajou University</span>
+                <span class="hideItem location" style="margin-right:10px;">Japan</span>
+                <span class="hideItem season">Fall '17</span>
+                <span class="hideItem price" style="">8725</span>
+                <span class="floatRight">$8,725.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">Sciences Po Lille</span>
+                <span class="hideItem location" style="margin-right:10px;">France</span>
+                <span class="hideItem season">Fall '17</span>
+                <span class="hideItem price" style="">11165</span>
+                <span class="floatRight">$11,165.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">University of Lyon</span>
+                <span class="hideItem location" style="margin-right:10px;">France</span>
+                <span class="hideItem season">Fall '17</span>
+                <span class="hideItem price" style="">10015</span>
+                <span class="floatRight">$10,015.00</span>
+            </div>
+            <div class="program" style="padding-left:5px;padding-right:5px;">
+                <span class="name inlineBlock vertAlignTop" style="font-weight:700;margin-right:10px;width:450px;">Waseda University</span>
+                <span class="hideItem location" style="margin-right:10px;">Japan</span>
+                <span class="hideItem season">Fall '17</span>
+                <span class="hideItem price" style="">11816</span>
+                <span class="floatRight">$11,816.00</span>
+            </div>
+
+        </div>
+
+        <!-- Financial Aid -->
+        <div class="vertCenterLeft posRel" style="padding:5px;margin-top:30px;margin-bottom:15px;">
+            <div class="lato" style="font-size:2em;padding-bottom:4px;font-weight:700;">Anticipated Financial Aid</div>
+        </div>
+        <div style="border-bottom:1px solid lightgrey;margin-bottom: 5px;"></div>
+        <div class="vertCenterLeft" style="margin-bottom:10px;margin-top:20px;">
+            <div class="posRel leftText" style="width:150px;margin-right:20px;height:40px;font-weight:700;padding-left:5px;">
+                <span class="posRel" style="top:10px;font-size:16px;">Federal Pell Grant</span>
+            </div>
+            <div class="vertCenterRight" style="width:600px;height:40px;">
+                <input id="fpg" type="range" value="5920" min="0" max="5920" class="mdl-slider mdl-js-slider"
+                       onchange="$('#fpgVal').html($('#fpg').val());calculateCost()"
+                       onmouseover="$('#fpgVal').html($('#fpg').val());calculateCost()"
+                       onclick="$('#fpgVal').html($('#fpg').val());calculateCost()"
+                       onmouseenter="$('#fpgVal').html($('#fpg').val());calculateCost()"
+                       onmouseleave="$('#fpgVal').html($('#fpg').val());calculateCost()" style="width:500px;">
+                <div class="posRel" style="width:50px;left:15px;" >
+                    $<span id="fpgVal" style="font-size:16px;">5920</span>
+                </div>
+            </div>
+        </div>
+        <div class="vertCenterLeft" style="margin-bottom:10px;margin-top:20px;">
+            <div class="posRel leftText" style="width:150px;margin-right:20px;height:40px;font-weight:700;padding-left:5px;">
+                <span class="posRel" style="top:10px;font-size:16px;">TAP</span>
+            </div>
+            <div class="vertCenterRight" style="width:600px;height:40px;">
+                <input id="tap" type="range" value="5165" min="0" max="5165" class="mdl-slider mdl-js-slider"
+                       onchange="$('#tapVal').html($('#tap').val());calculateCost()"
+                       onmouseover="$('#tapVal').html($('#tap').val());calculateCost()"
+                       onclick="$('#tapVal').html($('#tap').val());calculateCost()"
+                       onmouseenter="$('#tapVal').html($('#tap').val());calculateCost()"
+                       onmouseleave="$('#tapVal').html($('#tap').val());calculateCost()" style="width:500px;">
+                <div class="posRel" style="width:50px;left:15px;">
+                    $<span id="tapVal" style="font-size:16px;">5165</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scholarships -->
+        <div class="vertCenterLeft posRel" style="padding:5px;margin-top:30px;margin-bottom:15px;">
+            <div class="lato" style="font-size:2em;padding-bottom:4px;font-weight:700;">Scholarships</div>
+        </div>
+        <div style="border-bottom:1px solid lightgrey;margin-bottom: 5px;"></div>
+        <div class="vertCenterLeft" style="margin-bottom:10px;margin-top:20px;">
+            <div class="posRel leftText width100" style="margin-right:20px;height:40px;font-weight:700;padding-left:5px;">
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-2" id="gilmanShip"
+                       onchange="calculateCost()"
+                       onmouseover="calculateCost()"
+                       onclick="calculateCost()"
+                       onmouseenter="calculateCost()"
+                       onmouseleave="calculateCost()">
+                    <input type="checkbox" id="checkbox-2" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">
+                    Gilman Scholarship
+                    <span class="floatRight posRel" style="font-weight:400;font-size:16px;left:10px;">$5000</span>
+                </span>
+                </label>
+            </div>
+        </div>
+        <div class="vertCenterLeft" style="margin-bottom:10px;margin-top:20px;">
+            <div class="posRel leftText width100" style="margin-right:20px;height:40px;font-weight:700;padding-left:5px;">
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-3" id="iapShip"
+                       onchange="calculateCost()"
+                       onmouseover="calculateCost()"
+                       onclick="calculateCost()"
+                       onmouseenter="calculateCost()"
+                       onmouseleave="calculateCost()">
+                    <input type="checkbox" id="checkbox-3" class="mdl-checkbox__input">
+                    <span class="mdl-checkbox__label">
+                    IAP Scholarship
+                    <span class="floatRight posRel" style="font-weight:400;font-size:16px;left:10px;">$3000</span>
+                </span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
